@@ -1,4 +1,4 @@
-import StarParticles from "@/components/StarParticles";
+import DeferredStars from "@/components/DeferredStars";
 
 // 全ページ共通の動くモーション背景。
 // ネビュラ＋浮遊グローオーブ＋tsParticles の星＋流れ星＋流れるグリッド。
@@ -60,8 +60,8 @@ export default function MotionBackground() {
         />
       ))}
 
-      {/* tsParticles の漂う星 */}
-      <StarParticles className="absolute inset-0 opacity-70" />
+      {/* tsParticles の漂う星（アイドル時に遅延ロード） */}
+      <DeferredStars className="absolute inset-0 opacity-70" />
 
       {/* 流れるグリッド */}
       <div className="bg-grid bg-grid-anim absolute inset-0 opacity-[0.12]" />
