@@ -1,39 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import HeroCanvas from "@/components/HeroCanvas";
 import HeroHeadline from "@/components/HeroHeadline";
 import { site } from "@/lib/site";
 
-// WebGL は SSR 不可のためクライアントのみで遅延ロード
-const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
-
 export default function Hero() {
-  // テキスト・CSS背景を先に描画してから、重いWebGLをアイドル時に読み込む
-  const [showCanvas, setShowCanvas] = useState(false);
-  useEffect(() => {
-    const w = window as typeof window & {
-      requestIdleCallback?: (cb: () => void) => number;
-    };
-    const t = w.requestIdleCallback
-      ? w.requestIdleCallback(() => setShowCanvas(true))
-      : window.setTimeout(() => setShowCanvas(true), 600);
-    return () => clearTimeout(t as number);
-  }, []);
-
   return (
     <section className="relative grid min-h-[100svh] place-items-center overflow-hidden">
       {/* 即時表示の宇宙背景（CSSフォールバック） */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--color-violet)_12%,transparent),transparent_60%)]" />
 
-      {/* 宇宙ワープ背景（WebGL：遅延ロード＋フェードイン） */}
-      <div
-        className={`absolute inset-0 transition-opacity duration-1000 ${
-          showCanvas ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {showCanvas && <HeroCanvas />}
+      {/* 宇宙ワープ背景（軽量 Canvas 2D・即描画） */}
+      <div className="absolute inset-0">
+        <HeroCanvas />
       </div>
 
       {/* 中央に視線を集めるビネット＋地へのなじませ */}
