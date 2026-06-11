@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { site } from "@/lib/site";
+import { site, contactAccessKey } from "@/lib/site";
 
 type Fields = { name: string; email: string; subject: string; message: string };
 type Status = "idle" | "sending" | "sent" | "error";
@@ -17,7 +17,7 @@ export default function ContactForm() {
     subject: "",
     message: "",
   });
-  const [hp, setHp] = useState(""); // honeypot
+  const [botcheck, setBotcheck] = useState(false); // honeypot
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -47,20 +47,34 @@ export default function ContactForm() {
     setStatus("sending");
 
     try {
-      const res = await fetch("/contact.php", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...f, company_url: hp }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: contactAccessKey,
+          subject: `【お問合せ】${f.subject}`,
+          from_name: "アヴァント コーポレートサイト",
+          name: f.name,
+          email: f.email,
+          message: f.message || "(本文なし)",
+          botcheck, // honeypot（true ならスパムとして拒否）
+        }),
       });
       const json = await res.json().catch(() => null);
-      if (res.ok && json?.ok) {
+      if (res.ok && json?.success) {
         setStatus("sent");
       } else {
         setStatus("error");
-        setError("送信に失敗しました。お手数ですが下記の方法をお試しください。");
+        setError(
+          json?.message
+            ? `送信に失敗しました（${json.message}）。`
+            : "送信に失敗しました。お手数ですが下記の方法をお試しください。"
+        );
       }
     } catch {
-      // ローカル開発などで contact.php が無い場合はメールソフトにフォールバック
       setStatus("error");
       setError(
         "送信サーバーに接続できませんでした。お手数ですが下記の方法をお試しください。"
@@ -145,11 +159,11 @@ export default function ContactForm() {
 
       {/* honeypot（人間には非表示） */}
       <input
-        type="text"
+        type="checkbox"
         tabIndex={-1}
         autoComplete="off"
-        value={hp}
-        onChange={(e) => setHp(e.target.value)}
+        checked={botcheck}
+        onChange={(e) => setBotcheck(e.target.checked)}
         className="hidden"
         aria-hidden
       />

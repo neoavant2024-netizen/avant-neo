@@ -1,5 +1,9 @@
 // サイト全体で参照する企業情報・ナビゲーション定義
 
+// Web3Forms のアクセスキー（https://web3forms.com で info@avant-neo.jp を登録して取得）。
+// 公開して問題ない値（送信先メールはサービス側で紐付けられる）。
+export const contactAccessKey = "840cc863-849d-46a5-8be8-d1b1cae1802d";
+
 export const site = {
   name: "株式会社アヴァント",
   nameEn: "AVANT Inc.",
