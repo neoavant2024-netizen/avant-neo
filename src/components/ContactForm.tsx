@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
 import { site, contactAccessKey } from "@/lib/site";
 
 type Fields = { name: string; email: string; subject: string; message: string };
@@ -84,11 +83,7 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_30%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_50%,transparent)] px-8 py-12 text-center backdrop-blur-md"
-      >
+      <div className="hero-fade rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_30%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_50%,transparent)] px-8 py-12 text-center backdrop-blur-md">
         <div className="text-gradient-sweep glow-gradient mx-auto text-4xl font-bold">
           ✓
         </div>
@@ -98,7 +93,7 @@ export default function ContactForm() {
           <br />
           内容を確認のうえ、担当者よりご連絡いたします。
         </p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -183,14 +178,13 @@ export default function ContactForm() {
         </div>
       )}
 
-      <motion.button
+      <button
         type="submit"
         disabled={status === "sending"}
-        whileTap={{ scale: 0.98 }}
-        className="w-full rounded-full bg-[var(--color-fg)] px-8 py-4 text-sm font-semibold text-[#04060f] transition-shadow hover:shadow-[0_0_40px_-8px_var(--color-cyan)] disabled:opacity-60 sm:w-auto"
+        className="w-full rounded-full bg-[var(--color-fg)] px-8 py-4 text-sm font-semibold text-[#04060f] transition-all hover:shadow-[0_0_40px_-8px_var(--color-cyan)] active:scale-[0.98] disabled:opacity-60 sm:w-auto"
       >
         {status === "sending" ? "送信中…" : "この内容で送信する"}
-      </motion.button>
+      </button>
 
       <p className="text-xs leading-6 text-[var(--color-fg-muted)]">
         ※ 送信内容は {site.email} 宛に送信されます。

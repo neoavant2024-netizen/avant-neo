@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   text: string;
@@ -14,10 +14,10 @@ type Props = {
   unitClassName?: string;
 };
 
-const ease = [0.16, 1, 0.3, 1] as const;
 const NBSP = " ";
 
-// 文字／単語を分割し、奥から回転しながらピントが合う（blur→鮮明）3D出現演出。
+// 文字／単語を分割し、奥から回転しながらピントが合う3D出現演出。
+// framer-motion を使わず CSS アニメ + IntersectionObserver で実装。
 export default function SplitText({
   text,
   className,
@@ -27,33 +27,45 @@ export default function SplitText({
   stagger = 0.035,
   unitClassName,
 }: Props) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [on, setOn] = useState(trigger === "load");
+
+  useEffect(() => {
+    if (trigger === "load") {
+      setOn(true);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setOn(true);
+            io.disconnect();
+          }
+        });
+      },
+      { rootMargin: "-60px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [trigger]);
+
   const units = per === "char" ? Array.from(text) : text.split(" ");
 
-  const target = { opacity: 1, y: "0em", rotateX: 0, filter: "blur(0px)" };
-  const animProps =
-    trigger === "load"
-      ? { animate: target }
-      : { whileInView: target, viewport: { once: true, margin: "-60px" } };
-
   return (
-    <span
-      className={className}
-      style={{ display: "inline-block", perspective: "800px" }}
-      aria-label={text}
-    >
+    <span ref={ref} className={`split ${on ? "in" : ""} ${className ?? ""}`} aria-label={text}>
       {units.map((u, i) => (
-        <motion.span
+        <span
           key={i}
           aria-hidden
-          className={unitClassName}
-          style={{ display: "inline-block", transformOrigin: "50% 100%" }}
-          initial={{ opacity: 0, y: "0.55em", rotateX: -78, filter: "blur(8px)" }}
-          {...animProps}
-          transition={{ delay: delay + i * stagger, duration: 0.85, ease }}
+          className={`split-unit ${unitClassName ?? ""}`}
+          style={{ ["--d" as string]: `${delay + i * stagger}s` }}
         >
           {u === " " ? NBSP : u}
           {per === "word" && i < units.length - 1 ? NBSP : ""}
-        </motion.span>
+        </span>
       ))}
     </span>
   );

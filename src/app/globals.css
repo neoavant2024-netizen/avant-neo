@@ -625,6 +625,44 @@ html.lenis body {
   animation: page-enter 0.5s var(--ease-out-expo) both;
 }
 
+/* =========================================================
+   スクロール出現 / スプリットテキスト（IntersectionObserver + CSS）
+   framer-motion を使わず軽量に実装
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 28px));
+  transition: opacity 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.split {
+  display: inline-block;
+  perspective: 800px;
+}
+.split-unit {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.55em) rotateX(-78deg);
+  transform-origin: 50% 100%;
+  filter: blur(8px);
+}
+.split.in .split-unit {
+  animation: split-in 0.85s var(--ease-out-expo) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes split-in {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

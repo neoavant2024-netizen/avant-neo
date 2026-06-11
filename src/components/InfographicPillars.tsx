@@ -1,9 +1,5 @@
-"use client";
-
-import { motion } from "motion/react";
+import Reveal from "@/components/Reveal";
 import { pillars } from "@/lib/site";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 // 各軸を表すラインアイコン
 function PillarIcon({ id, className }: { id: number; className?: string }) {
@@ -53,14 +49,8 @@ export default function InfographicPillars() {
 
       <div className="grid gap-8 md:grid-cols-3 md:gap-10">
         {pillars.map((p, i) => (
-          <motion.div
-            key={p.no}
-            initial={{ opacity: 0, y: 36 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, delay: i * 0.12, ease }}
-            className="group relative flex flex-col items-center rounded-[1.6rem] border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_55%,transparent)] px-7 py-10 text-center backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-[color-mix(in_srgb,var(--color-cyan)_55%,transparent)] hover:shadow-[0_0_50px_-12px_color-mix(in_srgb,var(--color-violet)_60%,transparent)]"
-          >
+          <Reveal key={p.no} delay={i * 0.12} y={36}>
+            <div className="group relative flex h-full flex-col items-center rounded-[1.6rem] border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_55%,transparent)] px-7 py-10 text-center backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-[color-mix(in_srgb,var(--color-cyan)_55%,transparent)] hover:shadow-[0_0_50px_-12px_color-mix(in_srgb,var(--color-violet)_60%,transparent)]">
             {/* ネオンの番号リング */}
             <div className="relative grid h-24 w-24 place-items-center">
               <svg
@@ -122,7 +112,8 @@ export default function InfographicPillars() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+            </div>
+          </Reveal>
         ))}
       </div>
     </div>

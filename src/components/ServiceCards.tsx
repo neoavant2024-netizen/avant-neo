@@ -1,10 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "motion/react";
+import Reveal from "@/components/Reveal";
 import { services } from "@/lib/site";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 function ServiceIcon({ id, className }: { id: number; className?: string }) {
   const common = {
@@ -46,13 +42,7 @@ export default function ServiceCards() {
   return (
     <div className="mt-14 grid gap-6 md:grid-cols-3">
       {services.map((s, i) => (
-        <motion.div
-          key={s.id}
-          initial={{ opacity: 0, y: 34 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, delay: i * 0.1, ease }}
-        >
+        <Reveal key={s.id} delay={i * 0.1} y={34}>
           <Link
             href={`/services#${s.id}`}
             className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_16%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_55%,transparent)] p-8 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-[color-mix(in_srgb,var(--color-cyan)_55%,transparent)] hover:shadow-[0_0_50px_-12px_color-mix(in_srgb,var(--color-violet)_60%,transparent)]"
@@ -96,7 +86,7 @@ export default function ServiceCards() {
               </span>
             </span>
           </Link>
-        </motion.div>
+        </Reveal>
       ))}
     </div>
   );

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import { nav, site } from "@/lib/site";
 import LogoMark from "@/components/LogoMark";
 
@@ -57,10 +56,7 @@ export default function Header() {
               >
                 {item.label}
                 {active && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-x-3 -bottom-0.5 h-px bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-violet)]"
-                  />
+                  <span className="absolute inset-x-3 -bottom-0.5 h-px bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-violet)]" />
                 )}
               </Link>
             );
@@ -102,38 +98,39 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden md:hidden"
-          >
-            <div className="flex flex-col gap-1 px-5 pb-6 pt-2">
-              {[...nav, { label: "Contact", labelJa: "お問合せ", href: "/contact" }].map(
-                (item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="flex items-baseline justify-between border-b border-[var(--color-border)] py-3.5"
-                  >
-                    <span className="text-base">{item.label}</span>
-                    <span className="text-xs text-[var(--color-fg-muted)]">
-                      {item.labelJa}
-                    </span>
-                  </Link>
-                )
-              )}
-              <p className="mt-4 font-mono text-xs text-[var(--color-fg-muted)]">
-                {site.email}
-              </p>
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      {/* Mobile menu（grid-rows でCSSのみで開閉アニメ） */}
+      <nav
+        className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out md:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div
+          className={`min-h-0 overflow-hidden transition-opacity duration-300 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="flex flex-col gap-1 px-5 pb-6 pt-2">
+            {[
+              ...nav,
+              { label: "Contact", labelJa: "お問合せ", href: "/contact" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex items-baseline justify-between border-b border-[var(--color-border)] py-3.5"
+              >
+                <span className="text-base">{item.label}</span>
+                <span className="text-xs text-[var(--color-fg-muted)]">
+                  {item.labelJa}
+                </span>
+              </Link>
+            ))}
+            <p className="mt-4 font-mono text-xs text-[var(--color-fg-muted)]">
+              {site.email}
+            </p>
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }
