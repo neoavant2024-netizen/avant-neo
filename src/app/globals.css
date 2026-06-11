@@ -1,0 +1,563 @@
+@import "tailwindcss";
+
+/* =========================================================
+   AVANT — Design System (Dark / AI-Tech)
+   ========================================================= */
+@theme inline {
+  /* Base palette */
+  --color-bg: #060814;
+  --color-bg-soft: #0b0e1d;
+  --color-surface: #11142a;
+  --color-border: #232744;
+  --color-fg: #e8eaf4;
+  --color-fg-muted: #9aa0bd;
+  --color-fg-dim: #6b7099;
+
+  /* Accents */
+  --color-cyan: #22d3ee;
+  --color-violet: #8b5cf6;
+  --color-magenta: #d946ef;
+
+  /* Fonts */
+  --font-sans: var(--font-sans-latin), var(--font-jp), ui-sans-serif, system-ui,
+    sans-serif;
+  --font-jp: var(--font-jp), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-latin), ui-monospace, monospace;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --background: #060814;
+  --foreground: #e8eaf4;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: auto; /* Lenis が制御するため無効化 */
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Selection */
+::selection {
+  background: color-mix(in srgb, var(--color-cyan) 35%, transparent);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-violet), var(--color-cyan));
+  border-radius: 999px;
+}
+
+/* =========================================================
+   Utilities
+   ========================================================= */
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-cyan),
+    var(--color-violet) 55%,
+    var(--color-magenta)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grid {
+  background-image: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-border) 60%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-border) 60%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 60px -15px color-mix(in srgb, var(--color-cyan) 70%, transparent);
+}
+
+/* Marquee（流れる文字） */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: inline-flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 32s) linear infinite;
+}
+.marquee-track.is-reverse {
+  animation-direction: reverse;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Typewriter caret */
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  display: inline-block;
+  width: 0.06em;
+  margin-left: 0.08em;
+  background: var(--color-cyan);
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* 奥行き（3D perspective） */
+.perspective {
+  perspective: 1200px;
+}
+
+/* =========================================================
+   Text FX — glow / gloss / glitch / variable weight
+   ========================================================= */
+
+/* グロー発光（不透明テキスト用） */
+.glow-text {
+  text-shadow: 0 0 18px color-mix(in srgb, var(--color-cyan) 55%, transparent),
+    0 0 4px color-mix(in srgb, var(--color-cyan) 45%, transparent);
+}
+
+/* グラデーション文字のグロー（clipテキストは text-shadow が効かないため filter）
+   背景に溶けないよう暗い影を重ねてコントラストを確保する */
+.glow-gradient {
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-cyan) 40%, transparent))
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+}
+
+/* 光沢スイープ：白ハイライト＋ブランド色が流れるキネティックグラデ */
+@keyframes gradient-sweep {
+  to {
+    background-position: 200% center;
+  }
+}
+.text-gradient-sweep {
+  background: linear-gradient(
+    100deg,
+    var(--color-cyan),
+    #ffffff 28%,
+    var(--color-violet) 52%,
+    var(--color-magenta) 72%,
+    var(--color-cyan)
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-sweep 6s linear infinite;
+}
+
+/* 可変フォント weight トランジション（キネティック） */
+.vfont {
+  font-variation-settings: "wght" 600;
+  transition: font-variation-settings 0.55s var(--ease-out-expo);
+  will-change: font-variation-settings;
+}
+.group:hover .vfont,
+.vfont:hover,
+.vfont-bold {
+  font-variation-settings: "wght" 800;
+}
+
+/* テキストグリッチ */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.glitch::before {
+  color: var(--color-cyan);
+  animation: glitch-top 2.6s infinite linear alternate-reverse;
+}
+.glitch::after {
+  color: var(--color-magenta);
+  animation: glitch-bottom 3.1s infinite linear alternate-reverse;
+}
+@keyframes glitch-top {
+  0%,
+  92%,
+  100% {
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
+  93% {
+    transform: translate(-2px, -2px);
+    clip-path: inset(0 0 62% 0);
+  }
+  96% {
+    transform: translate(3px, 1px);
+    clip-path: inset(0 0 48% 0);
+  }
+}
+@keyframes glitch-bottom {
+  0%,
+  90%,
+  100% {
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
+  91% {
+    transform: translate(2px, 2px);
+    clip-path: inset(58% 0 0 0);
+  }
+  94% {
+    transform: translate(-3px, -1px);
+    clip-path: inset(46% 0 0 0);
+  }
+}
+
+/* ノイズ／ビネット（プレミアム質感） */
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    color-mix(in srgb, var(--color-bg) 70%, transparent) 100%
+  );
+}
+
+/* =========================================================
+   Motion background — nebula / tunnel
+   ========================================================= */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform, opacity;
+}
+.nebula-1 {
+  width: 46vw;
+  height: 46vw;
+  left: -8vw;
+  top: -12vh;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-violet) 42%, transparent),
+    transparent 70%
+  );
+  animation: drift-1 32s ease-in-out infinite;
+}
+.nebula-2 {
+  width: 42vw;
+  height: 42vw;
+  right: -6vw;
+  top: 16vh;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-cyan) 36%, transparent),
+    transparent 70%
+  );
+  animation: drift-2 38s ease-in-out infinite;
+}
+.nebula-3 {
+  width: 38vw;
+  height: 38vw;
+  left: 22vw;
+  bottom: -14vh;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-magenta) 30%, transparent),
+    transparent 70%
+  );
+  animation: drift-3 46s ease-in-out infinite;
+}
+@keyframes drift-1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8vw, 6vh) scale(1.18);
+  }
+}
+@keyframes drift-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate(-7vw, 8vh) scale(0.9);
+  }
+}
+@keyframes drift-3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(5vw, -6vh) scale(1.2);
+  }
+}
+
+/* 浮遊するグローオーブ */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(55px);
+  animation: orb-float var(--d, 22s) ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes orb-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(3vw, -4vh) scale(1.12);
+  }
+  66% {
+    transform: translate(-3vw, 3vh) scale(0.94);
+  }
+}
+
+/* 流れ星（宇宙空間） */
+.shooting-wrap {
+  position: absolute;
+  pointer-events: none;
+}
+.shooting-star {
+  position: relative;
+  display: block;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #eafaff;
+  box-shadow: 0 0 6px 1px rgba(174, 238, 255, 0.9);
+  opacity: 0;
+  animation: shoot var(--dur, 7s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  width: 130px;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(174, 238, 255, 0.7)
+  );
+}
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  4% {
+    opacity: 1;
+  }
+  16% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 0;
+    transform: translateX(-440px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-440px);
+  }
+}
+
+/* スクロールトンネル／インフィニットズーム */
+.tunnel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  perspective: 700px;
+}
+.tunnel-ring {
+  position: absolute;
+  aspect-ratio: 1;
+  width: 44vmax;
+  border: 1px solid color-mix(in srgb, var(--color-cyan) 45%, transparent);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: inset 0 0 60px -20px
+      color-mix(in srgb, var(--color-cyan) 50%, transparent),
+    0 0 40px -16px color-mix(in srgb, var(--color-violet) 50%, transparent);
+  animation: tunnel-zoom 7s linear infinite;
+}
+@keyframes tunnel-zoom {
+  0% {
+    transform: scale(0.05);
+    opacity: 0;
+  }
+  14% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* グラデ文字の発光脈動（常時モーション） */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-cyan) 42%, transparent))
+      drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85))
+      drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px color-mix(in srgb, var(--color-cyan) 68%, transparent))
+      drop-shadow(0 0 32px color-mix(in srgb, var(--color-violet) 42%, transparent))
+      drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85));
+  }
+}
+.glow-pulse {
+  animation: glow-pulse 3.2s ease-in-out infinite;
+}
+
+/* 強グロー／立体（Hero 強調用） */
+.glow-strong {
+  text-shadow: 0 0 22px color-mix(in srgb, var(--color-cyan) 55%, transparent),
+    0 0 46px color-mix(in srgb, var(--color-violet) 38%, transparent);
+}
+.text-emboss {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 18px rgba(0, 0, 0, 0.75);
+}
+
+/* セクション見出しのチップ（デザイン性） */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--color-cyan) 35%, var(--color-border));
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--color-cyan);
+  background: color-mix(in srgb, var(--color-cyan) 8%, transparent);
+  box-shadow: 0 0 24px -12px color-mix(in srgb, var(--color-cyan) 70%, transparent);
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-cyan);
+  box-shadow: 0 0 10px var(--color-cyan);
+}
+
+/* 動くグリッド（ゆっくり流れる） */
+@keyframes grid-pan {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 64px 64px;
+  }
+}
+.bg-grid-anim {
+  animation: grid-pan 22s linear infinite;
+}
+
+/* 漂う光点 */
+.float-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: float-y var(--d, 14s) ease-in-out infinite;
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.22;
+  }
+  50% {
+    transform: translateY(-36px);
+    opacity: 0.7;
+  }
+}
+
+/* インフォグラフィックのリング回転 */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+.spin-slow-rev {
+  animation: spin-slow 24s linear infinite reverse;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
