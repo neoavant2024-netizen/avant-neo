@@ -552,6 +552,79 @@ html.lenis body {
   animation: spin-slow 24s linear infinite reverse;
 }
 
+/* =========================================================
+   ファーストビュー：JS非依存の即時表示＋CSSアニメ
+   （framer-motion の hydration を待たずに表示するため）
+   ========================================================= */
+@keyframes hero-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.hero-line {
+  animation: hero-line-in 0.9s var(--ease-out-expo) both;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-fade {
+  animation: hero-fade-in 0.9s var(--ease-out-expo) both;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.hero-float {
+  animation: hero-float 6.5s ease-in-out infinite;
+}
+
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(40px);
+  }
+}
+.scroll-dot {
+  animation: scroll-dot 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-enter {
+  animation: page-enter 0.5s var(--ease-out-expo) both;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
