@@ -24,10 +24,6 @@ export default function Hero() {
 
       {/* 中央配置コンテンツ（JS非依存・CSSで即時表示＋フェード） */}
       <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-8">
-        <p className="eyebrow hero-fade mb-8" style={{ animationDelay: "0.05s" }}>
-          TECHNOLOGY · INNOVATION
-        </p>
-
         <h1 className="hero-float whitespace-nowrap text-[clamp(2rem,5.6vw,4.4rem)] font-bold leading-[1.32] tracking-tight">
           <HeroHeadline />
         </h1>
