@@ -842,6 +842,21 @@ a:hover > .nav-kinetic .char {
     transform: scale(1);
   }
 }
+@keyframes step-emphasis {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-cyan) 25%, transparent));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 24px color-mix(in srgb, var(--color-cyan) 75%, transparent))
+      drop-shadow(0 0 42px color-mix(in srgb, var(--color-violet) 45%, transparent));
+  }
+  100% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 16px color-mix(in srgb, var(--color-cyan) 45%, transparent));
+  }
+}
 @keyframes hero-scroll-hide {
   to {
     opacity: 0;
@@ -851,7 +866,7 @@ a:hover > .nav-kinetic .char {
 @supports (animation-timeline: view()) {
   @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
     .scene--hero {
-      height: 380svh;
+      height: 480svh;
     }
     .scene--approach {
       height: 250svh;
@@ -917,6 +932,13 @@ a:hover > .nav-kinetic .char {
     }
     .step-pop {
       animation-name: step-pop;
+    }
+    /* 全文表示後のタメ区間で見出しを脈動させる（文字に変化を起こす） */
+    .emph {
+      display: inline-block;
+      animation-name: step-emphasis;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
     }
     /* スクロール開始でフェードアウトする SCROLL インジケータ */
     .hero-pin-scroll {

@@ -12,6 +12,7 @@ import { site } from "@/lib/site";
 //   ① Hero（キャッチ＋説明＋ボタン）
 //   ② PHILOSOPHY（AI 立体オービット＋理念／要素ごとに段階表示）
 //   ③ VISION（ニューラルネット＋ビジョン／要素ごとに段階表示）
+// 各段は「登場 → 全文表示後のタメ（見出し脈動）→ 遊び（空スクロール）→ 次段」。
 // CSS scroll-driven animations 主体（非対応/モバイル/reduced は通常表示）。
 
 // pin 区間（contain）に対する各要素のスクロール割当を作るヘルパー
@@ -61,10 +62,10 @@ export default function HeroScene() {
 
         {/* 重ねる 3 ステップ（その場でクロス切替・各 cel は縦中央） */}
         <div className="scene-stack relative z-10 mx-auto max-w-5xl px-5 sm:px-8">
-          {/* ① Hero（テキストはダイナミックに登場 / スクロールでフェードアウト） */}
+          {/* ① Hero（しばらく表示 → スクロールでフェードアウト） */}
           <div
             className="scene-cel scrub scrub-out flex flex-col items-center justify-center text-center"
-            style={range(0, 16)}
+            style={range(8, 18)}
           >
             <h1 className="hero-float whitespace-nowrap text-[clamp(2.9rem,7.8vw,6.6rem)] font-bold leading-[1.22] tracking-tight">
               <HeroHeadline />
@@ -94,71 +95,78 @@ export default function HeroScene() {
             </div>
           </div>
 
-          {/* ② PHILOSOPHY（cel は opacity 出し入れ・中身は要素ごとに段階表示） */}
+          {/* ② PHILOSOPHY（要素ごとに段階表示 → タメ脈動 → 退場） */}
           <div
             className="scene-cel scrub scrub-fade flex flex-col items-center justify-center text-center"
-            style={range(22, 56)}
+            style={range(24, 58)}
           >
-            {/* グラフィック：スケールで先に出現 */}
-            <div className="step step-pop mb-9" style={range(24, 31)}>
+            <div className="step step-pop mb-9" style={range(25, 31)}>
               <AICore />
             </div>
-            <span className="eyebrow step step-rise" style={range(27, 33)}>
+            <span className="eyebrow step step-rise" style={range(28, 34)}>
               PHILOSOPHY
             </span>
-            {/* 見出し：下からせり上がる */}
+            {/* 見出し：下からせり上がり → タメで脈動（内側 span） */}
             <p
               className="step step-rise mt-8 text-[clamp(2.3rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight"
-              style={range(33, 43)}
+              style={range(33, 42)}
             >
-              AIという新たな知性を
-              <br />
-              <span className="text-gradient-sweep glow-gradient">
-                業務プロセス
+              <span className="emph" style={range(50, 57)}>
+                AIという新たな知性を
+                <br />
+                <span className="text-gradient-sweep glow-gradient">
+                  業務プロセス
+                </span>
+                に実装する。
               </span>
-              に実装する。
             </p>
-            {/* 説明：タイプライター風に左から表示 */}
+            {/* 説明：タイプライター風に左から表示（句点ごとに改行） */}
             <p
-              className="step step-type mx-auto mt-7 max-w-2xl text-base leading-[1.95] text-[var(--color-fg-muted)] sm:text-lg"
-              style={range(43, 53)}
+              className="step step-type mx-auto mt-7 max-w-3xl text-base leading-[1.95] text-[var(--color-fg-muted)] sm:text-lg"
+              style={range(42, 51)}
             >
-              私たちは机上の空論ではなく、自ら市場で得た
-              <span className="font-semibold text-[var(--color-fg)]">実践知</span>
-              から、実効性のある戦略をデザインします。
+              私たちは机上の空論ではなく、自ら市場で得た実践知から実効性のある戦略をデザインします。
+              <br />
+              生成AIの活用支援、SNSマーケティング、WEB制作・DX化まで。
+              <br />
+              経営課題に合わせて、テクノロジーを「使える形」で現場に実装します。
             </p>
           </div>
 
-          {/* ③ VISION（cel は opacity 出し入れ・中身は要素ごとに段階表示） */}
+          {/* ③ VISION（要素ごとに段階表示 → タメ脈動 → 退場） */}
           <div
             className="scene-cel scrub scrub-fade flex flex-col items-center justify-center text-center"
-            style={range(62, 92)}
+            style={range(66, 98)}
           >
-            {/* グラフィック：スケールで先に出現 */}
-            <div className="step step-pop mb-8" style={range(64, 71)}>
+            <div className="step step-pop mb-8" style={range(67, 73)}>
               <NeuralGraphic />
             </div>
-            <span className="eyebrow step step-rise" style={range(67, 73)}>
+            <span className="eyebrow step step-rise" style={range(70, 76)}>
               VISION
             </span>
-            {/* 見出し：スケールイン（②と別モーション） */}
+            {/* 見出し：スケールイン → タメで脈動（②と別モーション） */}
             <p
               className="step step-scale mt-8 text-[clamp(2.3rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight"
-              style={range(72, 82)}
+              style={range(75, 84)}
             >
-              人と事業を、
-              <br />
-              <span className="text-gradient-sweep glow-gradient">
-                テクノロジーで前へ。
+              <span className="emph" style={range(91, 97)}>
+                人と事業を、
+                <br />
+                <span className="text-gradient-sweep glow-gradient">
+                  テクノロジーで前へ。
+                </span>
               </span>
             </p>
-            {/* 説明：下からフェードアップ（②と別モーション） */}
+            {/* 説明：下からフェードアップ（句点ごとに改行） */}
             <p
-              className="step step-up mx-auto mt-7 max-w-2xl text-base leading-[1.95] text-[var(--color-fg-muted)] sm:text-lg"
-              style={range(82, 90)}
+              className="step step-up mx-auto mt-7 max-w-3xl text-base leading-[1.95] text-[var(--color-fg-muted)] sm:text-lg"
+              style={range(84, 92)}
             >
-              AIは目的ではなく、人の可能性を引き出す手段。
+              AIは目的ではなく、人の可能性を引き出すための手段です。
+              <br />
               技術と実践知を掛け合わせ、企業の「次の一手」を共に描きます。
+              <br />
+              変化の速い時代に、確かな成果へとつながる道筋をデザインします。
             </p>
           </div>
         </div>
