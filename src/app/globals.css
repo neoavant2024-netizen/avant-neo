@@ -561,10 +561,10 @@ html.lenis body {
 @keyframes hero-line-in {
   0% {
     opacity: 0;
-    transform: translateY(0.9em) scale(0.92);
-    filter: blur(12px);
+    transform: translateY(1.15em) scale(0.82);
+    filter: blur(18px);
   }
-  60% {
+  55% {
     opacity: 1;
   }
   100% {
@@ -574,7 +574,7 @@ html.lenis body {
   }
 }
 .hero-line {
-  animation: hero-line-in 1.15s var(--ease-out-expo) both;
+  animation: hero-line-in 1.3s var(--ease-out-expo) both;
 }
 
 @keyframes hero-fade-in {
@@ -780,7 +780,7 @@ a:hover > .nav-kinetic .char {
 @supports (animation-timeline: view()) {
   @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
     .scene--hero {
-      height: 340svh;
+      height: 380svh;
     }
     .scene--approach {
       height: 250svh;
@@ -825,7 +825,7 @@ a:hover > .nav-kinetic .char {
     .hero-pin-scroll {
       animation: hero-scroll-hide linear both;
       animation-timeline: --hero;
-      animation-range: cover 0% cover 10%;
+      animation-range: contain 0% contain 7%;
     }
   }
 }
@@ -888,7 +888,7 @@ a:hover > .nav-kinetic .char {
 }
 .ai-core {
   position: relative;
-  width: clamp(150px, 26vw, 230px);
+  width: clamp(190px, 31vw, 310px);
   aspect-ratio: 1;
   margin-inline: auto;
   transform-style: preserve-3d;
@@ -981,7 +981,7 @@ a:hover > .nav-kinetic .char {
    ノード間をパルスが流れ、各ノードが明滅する
    ========================================================= */
 .neural {
-  width: clamp(190px, 34vw, 310px);
+  width: clamp(230px, 40vw, 380px);
   height: auto;
   overflow: visible;
 }

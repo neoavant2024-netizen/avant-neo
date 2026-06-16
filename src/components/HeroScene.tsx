@@ -60,11 +60,11 @@ export default function HeroScene() {
             style={
               {
                 animationTimeline: "--hero",
-                animationRange: "cover 2% cover 15%",
+                animationRange: "contain 0% contain 16%",
               } as CSSProperties
             }
           >
-            <h1 className="hero-float whitespace-nowrap text-[clamp(2.4rem,6.6vw,5.6rem)] font-bold leading-[1.28] tracking-tight">
+            <h1 className="hero-float whitespace-nowrap text-[clamp(2.9rem,7.8vw,6.6rem)] font-bold leading-[1.22] tracking-tight">
               <HeroHeadline />
             </h1>
             <p
@@ -98,13 +98,13 @@ export default function HeroScene() {
             style={
               {
                 animationTimeline: "--hero",
-                animationRange: "cover 19% cover 50%",
+                animationRange: "contain 22% contain 56%",
               } as CSSProperties
             }
           >
             <AICore />
             <span className="eyebrow">PHILOSOPHY</span>
-            <p className="mt-8 text-[clamp(2rem,4.8vw,3.4rem)] font-bold leading-[1.45] tracking-tight">
+            <p className="mt-8 text-[clamp(2.3rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight">
               AIという新たな知性を
               <br />
               <span className="text-gradient-sweep glow-gradient">
@@ -125,7 +125,7 @@ export default function HeroScene() {
             style={
               {
                 animationTimeline: "--hero",
-                animationRange: "cover 57% cover 73%",
+                animationRange: "contain 62% contain 92%",
               } as CSSProperties
             }
           >
@@ -133,7 +133,7 @@ export default function HeroScene() {
               <NeuralGraphic />
             </div>
             <span className="eyebrow">VISION</span>
-            <p className="mt-8 text-[clamp(2rem,4.8vw,3.4rem)] font-bold leading-[1.45] tracking-tight">
+            <p className="mt-8 text-[clamp(2.3rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight">
               人と事業を、
               <br />
               <span className="text-gradient-sweep glow-gradient">
