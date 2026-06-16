@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { nav, site } from "@/lib/site";
 import LogoMark from "@/components/LogoMark";
 
@@ -54,7 +54,17 @@ export default function Header() {
                     : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                 }`}
               >
-                {item.label}
+                <span className="nav-kinetic">
+                  {item.label.split("").map((ch, ci) => (
+                    <span
+                      key={ci}
+                      className="char"
+                      style={{ "--i": ci } as CSSProperties}
+                    >
+                      {ch}
+                    </span>
+                  ))}
+                </span>
                 {active && (
                   <span className="absolute inset-x-3 -bottom-0.5 h-px bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-violet)]" />
                 )}

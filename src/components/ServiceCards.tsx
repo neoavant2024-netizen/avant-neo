@@ -50,8 +50,8 @@ export default function ServiceCards() {
             {/* 上辺のネオンライン（ホバーで伸びる） */}
             <span className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-violet)] transition-transform duration-500 group-hover:scale-x-100" />
 
-            {/* 背景の大きな番号 */}
-            <span className="pointer-events-none absolute right-5 top-3 font-mono text-6xl font-bold text-[color-mix(in_srgb,var(--color-fg-muted)_10%,transparent)]">
+            {/* 背景の大きな番号（スクロールで上下ドリフト） */}
+            <span className="scroll-num pointer-events-none absolute right-5 top-3 font-mono text-6xl font-bold text-[color-mix(in_srgb,var(--color-fg-muted)_10%,transparent)]">
               0{i + 1}
             </span>
 

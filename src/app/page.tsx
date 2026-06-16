@@ -30,7 +30,9 @@ const keywords = [
 export default function Home() {
   return (
     <>
-      <Hero />
+      <div className="hero-stage">
+        <Hero />
+      </div>
 
       {/* ===== Philosophy（中央・装飾） ===== */}
       <section className="relative py-32 sm:py-44">

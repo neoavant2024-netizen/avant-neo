@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 
 export default function Hero() {
   return (
-    <section className="relative grid min-h-[100svh] place-items-center overflow-hidden">
+    <section className="hero-pin relative grid min-h-[100svh] place-items-center overflow-hidden">
       {/* 即時表示の宇宙背景（CSSフォールバック） */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--color-violet)_12%,transparent),transparent_60%)]" />
 
@@ -23,7 +23,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[58vh] w-[92vw] max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(ellipse,color-mix(in_srgb,var(--color-bg)_72%,transparent),transparent_72%)] blur-2xl" />
 
       {/* 中央配置コンテンツ（JS非依存・CSSで即時表示＋フェード） */}
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-8">
+      <div className="hero-pin-content relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-8">
         <h1 className="hero-float whitespace-nowrap text-[clamp(2rem,5.6vw,4.4rem)] font-bold leading-[1.32] tracking-tight">
           <HeroHeadline />
         </h1>
@@ -56,7 +56,7 @@ export default function Hero() {
 
       {/* スクロールインジケータ */}
       <div
-        className="hero-fade absolute bottom-8 right-6 hidden flex-col items-center gap-2 sm:flex lg:right-10"
+        className="hero-fade hero-pin-scroll absolute bottom-8 right-6 hidden flex-col items-center gap-2 sm:flex lg:right-10"
         style={{ animationDelay: "1.1s" }}
       >
         <span className="font-mono text-[10px] tracking-[0.3em] text-[var(--color-fg-muted)]">

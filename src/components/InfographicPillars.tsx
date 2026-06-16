@@ -44,8 +44,8 @@ function PillarIcon({ id, className }: { id: number; className?: string }) {
 export default function InfographicPillars() {
   return (
     <div className="relative mt-16">
-      {/* カードを結ぶネオンの接続線（PC のみ） */}
-      <div className="pointer-events-none absolute left-0 right-0 top-12 hidden h-px bg-gradient-to-r from-transparent via-[color-mix(in_srgb,var(--color-cyan)_55%,transparent)] to-transparent md:block" />
+      {/* カードを結ぶネオンの接続線（PC のみ・スクロールで左→右に伸びる） */}
+      <div className="scroll-line pointer-events-none absolute left-0 right-0 top-12 hidden h-px bg-gradient-to-r from-transparent via-[color-mix(in_srgb,var(--color-cyan)_55%,transparent)] to-transparent md:block" />
 
       <div className="grid gap-8 md:grid-cols-3 md:gap-10">
         {pillars.map((p, i) => (
@@ -55,7 +55,7 @@ export default function InfographicPillars() {
             <div className="relative grid h-24 w-24 place-items-center">
               <svg
                 viewBox="0 0 100 100"
-                className="spin-slow absolute inset-0 h-full w-full text-[var(--color-cyan)]"
+                className="spin-slow scroll-spin absolute inset-0 h-full w-full text-[var(--color-cyan)]"
               >
                 <circle
                   cx="50"
@@ -70,7 +70,7 @@ export default function InfographicPillars() {
               </svg>
               <svg
                 viewBox="0 0 100 100"
-                className="spin-slow-rev absolute inset-0 h-full w-full text-[var(--color-violet)]"
+                className="spin-slow-rev scroll-spin-rev absolute inset-0 h-full w-full text-[var(--color-violet)]"
               >
                 <circle
                   cx="50"

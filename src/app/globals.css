@@ -672,3 +672,113 @@ html.lenis body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* =========================================================
+   triorb 参考：スクロール連動モーション
+   - CSS scroll-driven animations（animation-timeline）主体で軽量
+   - 非対応ブラウザ / reduced-motion では発火せず既存表示のまま
+   ========================================================= */
+
+/* --- モーション1：メニュー文字のキネティック（hover で stagger 跳ね上げ） --- */
+.nav-kinetic {
+  display: inline-flex;
+  white-space: pre;
+}
+.nav-kinetic .char {
+  display: inline-block;
+  transition: transform 0.42s var(--ease-out-expo),
+    color 0.42s var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 0.028s);
+}
+a:hover > .nav-kinetic .char,
+.nav-kinetic:hover .char {
+  transform: translateY(-0.32em);
+}
+a:hover > .nav-kinetic .char {
+  color: var(--color-cyan);
+}
+
+/* --- モーション2：ヒーローを pin して中身をスクロールでスクラブ --- */
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .hero-stage {
+      height: 178svh;
+    }
+    .hero-pin {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+    }
+    .hero-pin-content {
+      animation: hero-scrub linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 72svh;
+    }
+    .hero-pin-scroll {
+      animation: hero-scroll-hide linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 22svh;
+    }
+  }
+}
+@keyframes hero-scrub {
+  to {
+    opacity: 0;
+    transform: translateY(-7%) scale(0.93);
+    filter: blur(3px);
+  }
+}
+@keyframes hero-scroll-hide {
+  to {
+    opacity: 0;
+  }
+}
+
+/* --- モーション3：サービス／3つの軸ブロックのスクロール内変化 --- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* 接続線・上辺ラインがスクロールで左→右に伸びる */
+    .scroll-line {
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: scroll-line-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 38%;
+    }
+    /* 背景の大きな番号がスクロールで上下にドリフト */
+    .scroll-num {
+      animation: scroll-num-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    /* リングがスクロール量に同期して回転（既存の無限回転を上書き） */
+    .scroll-spin {
+      animation: spin-slow linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    .scroll-spin-rev {
+      animation: scroll-spin-rev linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+@keyframes scroll-line-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes scroll-num-drift {
+  from {
+    transform: translateY(26px);
+  }
+  to {
+    transform: translateY(-26px);
+  }
+}
+@keyframes scroll-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
