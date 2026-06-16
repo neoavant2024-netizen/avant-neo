@@ -771,6 +771,77 @@ a:hover > .nav-kinetic .char {
     filter: blur(4px);
   }
 }
+@keyframes scrub-fade {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes step-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(42px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@keyframes step-type {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes step-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@keyframes step-up {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes step-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 @keyframes hero-scroll-hide {
   to {
     opacity: 0;
@@ -820,6 +891,32 @@ a:hover > .nav-kinetic .char {
     /* 出現 → 保持 → 退場 を1本で行う中間ステップ用 */
     .scrub-step {
       animation-name: scrub-step;
+    }
+    /* cel 全体は opacity だけで出し入れし、中の要素を個別に動かす */
+    .scrub-fade {
+      animation-name: scrub-fade;
+    }
+    /* cel 内の各要素を段階的に別モーションで出す */
+    .step {
+      opacity: 0;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+    }
+    .step-rise {
+      animation-name: step-rise;
+    }
+    .step-type {
+      opacity: 1;
+      animation-name: step-type;
+    }
+    .step-scale {
+      animation-name: step-scale;
+    }
+    .step-up {
+      animation-name: step-up;
+    }
+    .step-pop {
+      animation-name: step-pop;
     }
     /* スクロール開始でフェードアウトする SCROLL インジケータ */
     .hero-pin-scroll {
