@@ -67,7 +67,7 @@ export default function PlayerTraits() {
 
       <div className="grid gap-10 sm:grid-cols-3">
         {traits.map((t, i) => (
-          <Reveal key={t.en} delay={i * 0.12} y={30}>
+          <Reveal key={t.en} delay={i * 0.15} y={46} className="pop">
             <div className="relative flex flex-col items-center text-center">
               <span className="relative grid h-20 w-20 place-items-center rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_35%,transparent)] bg-[color-mix(in_srgb,var(--color-cyan)_8%,transparent)] text-[var(--color-cyan)] shadow-[0_0_30px_-10px_var(--color-cyan)]">
                 <TraitIcon id={i} className="h-9 w-9" />

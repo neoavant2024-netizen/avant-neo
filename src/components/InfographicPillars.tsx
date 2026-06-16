@@ -143,7 +143,7 @@ export default function InfographicPillars({
           }
 
           return (
-            <Reveal key={p.no} delay={i * 0.12} y={36}>
+            <Reveal key={p.no} delay={i * 0.15} y={52} className="pop">
               {card}
             </Reveal>
           );

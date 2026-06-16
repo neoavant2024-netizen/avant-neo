@@ -559,19 +559,22 @@ html.lenis body {
    （framer-motion の hydration を待たずに表示するため）
    ========================================================= */
 @keyframes hero-line-in {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(0.5em);
-    filter: blur(6px);
+    transform: translateY(0.9em) scale(0.92);
+    filter: blur(12px);
   }
-  to {
+  60% {
+    opacity: 1;
+  }
+  100% {
     opacity: 1;
     transform: none;
     filter: blur(0);
   }
 }
 .hero-line {
-  animation: hero-line-in 0.9s var(--ease-out-expo) both;
+  animation: hero-line-in 1.15s var(--ease-out-expo) both;
 }
 
 @keyframes hero-fade-in {
@@ -640,6 +643,17 @@ html.lenis body {
 .reveal.in {
   opacity: 1;
   transform: none;
+}
+/* よりダイナミックな登場（スクロールで大きく動いて出る・一度きり・戻っても維持） */
+.reveal.pop {
+  transform: translateY(64px) scale(0.88);
+  filter: blur(8px);
+  transition: opacity 0.95s var(--ease-out-expo),
+    transform 0.95s var(--ease-out-expo), filter 0.95s var(--ease-out-expo);
+}
+.reveal.pop.in {
+  transform: none;
+  filter: blur(0);
 }
 
 .split {
@@ -959,5 +973,46 @@ a:hover > .nav-kinetic .char {
   }
   to {
     transform: rotateX(60deg) rotateY(118deg) rotateZ(360deg);
+  }
+}
+
+/* =========================================================
+   ニューラルネット・グラフィック — VISION のビジュアル
+   ノード間をパルスが流れ、各ノードが明滅する
+   ========================================================= */
+.neural {
+  width: clamp(190px, 34vw, 310px);
+  height: auto;
+  overflow: visible;
+}
+.neural-edge {
+  stroke: color-mix(in srgb, var(--color-cyan) 55%, transparent);
+  stroke-width: 0.7;
+  stroke-dasharray: 3 7;
+  animation: neural-flow 2.6s linear infinite;
+}
+@keyframes neural-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.neural-node {
+  filter: drop-shadow(
+    0 0 5px color-mix(in srgb, var(--color-cyan) 75%, transparent)
+  );
+  animation: neural-pulse 2.6s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes neural-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
   }
 }

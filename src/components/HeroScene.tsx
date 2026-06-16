@@ -4,13 +4,14 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import HeroCanvas from "@/components/HeroCanvas";
 import HeroHeadline from "@/components/HeroHeadline";
+import NeuralGraphic from "@/components/NeuralGraphic";
 import { site } from "@/lib/site";
 
 // ヒーローを画面に固定（pin）し、スクロールに合わせて
 // その場で 3 段が次々に切り替わるシーン。
-//   ① Hero（キャッチ＋説明＋ボタン）
-//   ② PHILOSOPHY（理念＋AI 立体グラフィック）
-//   ③ 理念 / 利他利己
+//   ① Hero（キャッチ＋説明＋ボタン／テキストはダイナミックに登場）
+//   ② PHILOSOPHY（理念＋AI 立体オービット）
+//   ③ VISION（ビジョン＋ニューラルネット）
 // CSS scroll-driven animations 主体（非対応/モバイル/reduced は通常表示）。
 
 // AI コア（中央の発光体＋3D オービット）
@@ -52,8 +53,8 @@ export default function HeroScene() {
         </div>
 
         {/* 重ねる 3 ステップ（その場でクロス切替） */}
-        <div className="scene-stack relative z-10 mx-auto max-w-4xl px-5 sm:px-8">
-          {/* ① Hero（スクロールでフェードアウト） */}
+        <div className="scene-stack relative z-10 mx-auto max-w-5xl px-5 sm:px-8">
+          {/* ① Hero（テキストはダイナミックに登場 / スクロールでフェードアウト） */}
           <div
             className="scene-cel scrub scrub-out flex flex-col items-center text-center"
             style={
@@ -63,47 +64,47 @@ export default function HeroScene() {
               } as CSSProperties
             }
           >
-            <h1 className="hero-float whitespace-nowrap text-[clamp(2rem,5.6vw,4.4rem)] font-bold leading-[1.32] tracking-tight">
+            <h1 className="hero-float whitespace-nowrap text-[clamp(2.4rem,6.6vw,5.6rem)] font-bold leading-[1.28] tracking-tight">
               <HeroHeadline />
             </h1>
             <p
-              className="hero-fade mx-auto mt-9 max-w-2xl text-[15px] leading-8 text-[var(--color-fg-muted)] sm:text-base"
-              style={{ animationDelay: "0.6s" }}
+              className="hero-fade mx-auto mt-10 max-w-2xl text-base leading-8 text-[var(--color-fg-muted)] sm:text-lg"
+              style={{ animationDelay: "0.7s" }}
             >
               {site.description}
             </p>
             <div
-              className="hero-fade mt-11 flex flex-wrap items-center justify-center gap-4"
-              style={{ animationDelay: "0.78s" }}
+              className="hero-fade mt-12 flex flex-wrap items-center justify-center gap-4"
+              style={{ animationDelay: "0.9s" }}
             >
               <Link
                 href="/services"
-                className="rounded-full bg-[var(--color-fg)] px-7 py-3.5 text-sm font-semibold text-[#04060f] transition-shadow hover:shadow-[0_0_40px_-8px_var(--color-cyan)]"
+                className="rounded-full bg-[var(--color-fg)] px-8 py-4 text-sm font-semibold text-[#04060f] transition-shadow hover:shadow-[0_0_40px_-8px_var(--color-cyan)]"
               >
                 サービスを見る
               </Link>
               <Link
                 href="/contact"
-                className="rounded-full border border-[var(--color-border)] px-7 py-3.5 text-sm font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-cyan)] hover:text-[var(--color-cyan)]"
+                className="rounded-full border border-[var(--color-border)] px-8 py-4 text-sm font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-cyan)] hover:text-[var(--color-cyan)]"
               >
                 お問合せ
               </Link>
             </div>
           </div>
 
-          {/* ② PHILOSOPHY（出現→保持→退場・AI 立体グラフィック付き） */}
+          {/* ② PHILOSOPHY（AI 立体オービット＋理念） */}
           <div
             className="scene-cel scrub scrub-step flex flex-col items-center text-center"
             style={
               {
                 animationTimeline: "--hero",
-                animationRange: "cover 19% cover 52%",
+                animationRange: "cover 19% cover 50%",
               } as CSSProperties
             }
           >
             <AICore />
             <span className="eyebrow">PHILOSOPHY</span>
-            <p className="mt-8 text-[clamp(1.8rem,4.2vw,3rem)] font-bold leading-[1.5] tracking-tight">
+            <p className="mt-8 text-[clamp(2rem,4.8vw,3.4rem)] font-bold leading-[1.45] tracking-tight">
               AIという新たな知性を
               <br />
               <span className="text-gradient-sweep glow-gradient">
@@ -118,7 +119,7 @@ export default function HeroScene() {
             </p>
           </div>
 
-          {/* ③ 理念 / 利他利己（出現して保持） */}
+          {/* ③ VISION（ニューラルネット＋ビジョン） */}
           <div
             className="scene-cel scrub scrub-in flex flex-col items-center text-center"
             style={
@@ -128,20 +129,20 @@ export default function HeroScene() {
               } as CSSProperties
             }
           >
-            <span className="eyebrow">PHILOSOPHY</span>
-            <p className="mt-8 font-mono text-xs tracking-[0.25em] text-[var(--color-cyan)]">
-              理念 / 利他利己
-            </p>
-            <p className="mt-5 text-[clamp(1.5rem,3.4vw,2.4rem)] font-bold leading-[1.55] tracking-tight">
-              顧客や相手に利益を与えることで、
+            <div className="mb-8">
+              <NeuralGraphic />
+            </div>
+            <span className="eyebrow">VISION</span>
+            <p className="mt-8 text-[clamp(2rem,4.8vw,3.4rem)] font-bold leading-[1.45] tracking-tight">
+              人と事業を、
               <br />
               <span className="text-gradient-sweep glow-gradient">
-                自らも利益を得ていく
+                テクノロジーで前へ。
               </span>
-              。
             </p>
-            <p className="mx-auto mt-6 max-w-xl text-sm leading-[1.95] text-[var(--color-fg-muted)] sm:text-base">
-              「利他」と「利己」は対立しない。相手の成功を第一に考え抜くことが、めぐりめぐって自社の成長につながる——その信念を、私たちは事業の根幹に置いています。
+            <p className="mx-auto mt-7 max-w-2xl text-base leading-[1.95] text-[var(--color-fg-muted)] sm:text-lg">
+              AIは目的ではなく、人の可能性を引き出す手段。
+              技術と実践知を掛け合わせ、企業の「次の一手」を共に描きます。
             </p>
           </div>
         </div>
@@ -150,7 +151,7 @@ export default function HeroScene() {
         <div className="hero-pin-scroll absolute bottom-8 right-6 hidden sm:block lg:right-10">
           <div
             className="hero-fade flex flex-col items-center gap-2"
-            style={{ animationDelay: "1.1s" }}
+            style={{ animationDelay: "1.2s" }}
           >
             <span className="font-mono text-[10px] tracking-[0.3em] text-[var(--color-fg-muted)]">
               SCROLL

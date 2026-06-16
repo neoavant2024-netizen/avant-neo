@@ -116,7 +116,7 @@ export default function ServiceCards({
         }
 
         return (
-          <Reveal key={s.id} delay={i * 0.1} y={34}>
+          <Reveal key={s.id} delay={i * 0.15} y={52} className="pop">
             {card}
           </Reveal>
         );
