@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import Reveal from "@/components/Reveal";
 import { services } from "@/lib/site";
 
@@ -38,11 +39,19 @@ function ServiceIcon({ id, className }: { id: number; className?: string }) {
   );
 }
 
-export default function ServiceCards() {
+// scrub=true のとき、各カードは Reveal ではなく scrub クラスで
+// 親シーン（timeline）のスクロール進行に同期して順に出現する。
+export default function ServiceCards({
+  scrub = false,
+  timeline,
+}: {
+  scrub?: boolean;
+  timeline?: string;
+}) {
   return (
     <div className="mt-14 grid gap-6 md:grid-cols-3">
-      {services.map((s, i) => (
-        <Reveal key={s.id} delay={i * 0.1} y={34}>
+      {services.map((s, i) => {
+        const card = (
           <Link
             href={`/services#${s.id}`}
             className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_16%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_55%,transparent)] p-8 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-[color-mix(in_srgb,var(--color-cyan)_55%,transparent)] hover:shadow-[0_0_50px_-12px_color-mix(in_srgb,var(--color-violet)_60%,transparent)]"
@@ -86,8 +95,32 @@ export default function ServiceCards() {
               </span>
             </span>
           </Link>
-        </Reveal>
-      ))}
+        );
+
+        if (scrub) {
+          const start = 16 + i * 14;
+          return (
+            <div
+              key={s.id}
+              className="scrub scrub-in h-full"
+              style={
+                {
+                  animationTimeline: timeline,
+                  animationRange: `cover ${start}% cover ${start + 16}%`,
+                } as CSSProperties
+              }
+            >
+              {card}
+            </div>
+          );
+        }
+
+        return (
+          <Reveal key={s.id} delay={i * 0.1} y={34}>
+            {card}
+          </Reveal>
+        );
+      })}
     </div>
   );
 }

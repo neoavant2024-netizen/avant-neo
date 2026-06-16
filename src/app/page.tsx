@@ -1,10 +1,12 @@
 import Link from "next/link";
-import Hero from "@/components/Hero";
+import type { CSSProperties } from "react";
+import HeroScene from "@/components/HeroScene";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
 import Marquee from "@/components/Marquee";
 import Parallax from "@/components/Parallax";
 import SplitText from "@/components/SplitText";
+import PlayerTraits from "@/components/PlayerTraits";
 import InfographicPillars from "@/components/InfographicPillars";
 import ServiceCards from "@/components/ServiceCards";
 import { news, site } from "@/lib/site";
@@ -30,37 +32,19 @@ const keywords = [
 export default function Home() {
   return (
     <>
-      <div className="hero-stage">
-        <Hero />
+      {/* ===== Hero → Philosophy（クロス pin シーン） ===== */}
+      <HeroScene />
+
+      {/* ===== Keyword Marquee（Hero を抜けて横に流れる） ===== */}
+      <div className="relative py-10">
+        <Marquee items={keywords} duration={36} />
       </div>
 
-      {/* ===== Philosophy（中央・装飾） ===== */}
-      <section className="relative py-32 sm:py-44">
+      {/* ===== 理念：利他利己 ===== */}
+      <section className="relative py-20 sm:py-28">
         <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
-          <Reveal>
-            <span className="eyebrow">PHILOSOPHY</span>
-          </Reveal>
-
-          <Reveal delay={0.08} y={20}>
-            <p className="mt-12 text-[clamp(1.9rem,4.2vw,3.1rem)] font-bold leading-[1.5] tracking-tight">
-              AIという新たな知性を
-              <br />
-              <span className="text-gradient-sweep glow-gradient">業務プロセス</span>
-              に実装する。
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.18} y={20}>
-            <p className="mx-auto mt-9 max-w-2xl text-lg leading-[1.95] text-[var(--color-fg-muted)] sm:text-xl">
-              私たちは机上の空論ではなく、自ら市場で得た
-              <span className="font-semibold text-[var(--color-fg)]">実践知</span>
-              から、実効性のある戦略をデザインします。
-            </p>
-          </Reveal>
-
-          {/* 企業理念：利他利己 */}
-          <Reveal delay={0.26} y={24}>
-            <div className="mx-auto mt-14 max-w-2xl rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_45%,transparent)] px-8 py-9 backdrop-blur-md">
+          <Reveal delay={0.1} y={24}>
+            <div className="mx-auto max-w-2xl rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_45%,transparent)] px-8 py-9 backdrop-blur-md">
               <p className="font-mono text-xs tracking-[0.25em] text-[var(--color-cyan)]">
                 理念 / 利他利己
               </p>
@@ -80,29 +64,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Keyword Marquee ===== */}
-      <div className="relative py-10">
-        <Marquee items={keywords} duration={36} />
-      </div>
-
-      {/* ===== Approach（インフォグラフィック） ===== */}
-      <section className="relative py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-5 text-center sm:px-8">
-          <Reveal>
+      {/* ===== Approach（3つの軸）pin シーン：スクロールで 1・2・3 と出現 ===== */}
+      <section
+        className="scene scene--approach relative"
+        style={{ viewTimelineName: "--approach" } as CSSProperties}
+      >
+        <div className="scene-pin">
+          <div className="mx-auto w-full max-w-7xl px-5 text-center sm:px-8">
             <span className="eyebrow">APPROACH</span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2 className="mx-auto mt-7 max-w-2xl text-[clamp(2rem,4.4vw,3.2rem)] font-bold tracking-tight">
+            <h2 className="mx-auto mt-6 max-w-2xl text-[clamp(1.9rem,4.4vw,3rem)] font-bold tracking-tight">
               3つの軸で、<span className="text-gradient-sweep">経営</span>を前へ。
             </h2>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <p className="mx-auto mt-7 max-w-2xl text-lg leading-[1.9] text-[var(--color-fg-muted)] sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-[1.9] text-[var(--color-fg-muted)] sm:text-lg">
               テクノロジー・マーケティング・実践知見。
               3つの領域を掛け合わせ、貴社の経営課題に最適なアプローチを設計します。
             </p>
-          </Reveal>
-          <InfographicPillars />
+            <InfographicPillars scrub timeline="--approach" />
+          </div>
         </div>
       </section>
 
@@ -130,9 +108,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Who We Are（背景は共通の連続背景のみ） ===== */}
-      <section className="relative overflow-hidden py-40 sm:py-52">
-        <div className="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
+      {/* ===== Who We Are（プレイヤー：文言＋テック図形） ===== */}
+      <section className="relative overflow-hidden py-32 sm:py-44">
+        <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
           <Reveal>
             <span className="eyebrow">WHO WE ARE</span>
           </Reveal>
@@ -150,26 +128,34 @@ export default function Home() {
               />
             </span>
           </h2>
-          <Reveal delay={0.2} y={20}>
-            <p className="mx-auto mt-8 max-w-2xl text-lg leading-[1.95] text-[var(--color-fg-muted)] sm:text-xl">
-              自社で事業を運営するプレイヤーだからこそ得られる「リアルな」知見。
-              その実践知を還元し、机上の空論ではない、実効性のある戦略をお届けします。
+          <Reveal delay={0.18} y={20}>
+            <p className="mx-auto mt-8 max-w-2xl text-lg font-semibold leading-[1.9] text-[var(--color-fg)] sm:text-xl">
+              机上の理論ではなく、現場で確かめた事実だけを、戦略に変える。
             </p>
           </Reveal>
+          <Reveal delay={0.26} y={20}>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-[1.95] text-[var(--color-fg-muted)]">
+              評論家ではない。自らリスクを取り、事業を張る当事者だからこそ届けられる「生きた知見」があります。成功も失敗も、すべては市場で得た一次情報です。
+            </p>
+          </Reveal>
+          <PlayerTraits />
         </div>
       </section>
 
-      {/* ===== Services preview ===== */}
-      <section className="relative py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <Reveal>
-              <span className="eyebrow">SERVICES</span>
-              <h2 className="mt-6 text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-tight">
-                提供するサービス
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
+      {/* ===== Services（提供するサービス）pin シーン：スクロールで順に出現 ===== */}
+      <section
+        className="scene scene--services relative"
+        style={{ viewTimelineName: "--services" } as CSSProperties}
+      >
+        <div className="scene-pin">
+          <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <span className="eyebrow">SERVICES</span>
+                <h2 className="mt-6 text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-tight">
+                  提供するサービス
+                </h2>
+              </div>
               <Link
                 href="/services"
                 className="group inline-flex items-center gap-2 text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-cyan)]"
@@ -179,10 +165,10 @@ export default function Home() {
                   →
                 </span>
               </Link>
-            </Reveal>
-          </div>
+            </div>
 
-          <ServiceCards />
+            <ServiceCards scrub timeline="--services" />
+          </div>
         </div>
       </section>
 

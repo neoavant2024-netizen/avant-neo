@@ -698,39 +698,93 @@ a:hover > .nav-kinetic .char {
   color: var(--color-cyan);
 }
 
-/* --- モーション2：ヒーローを pin して中身をスクロールでスクラブ --- */
-@supports (animation-timeline: scroll()) {
-  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-    .hero-stage {
-      height: 178svh;
-    }
-    .hero-pin {
-      position: sticky;
-      top: 0;
-      height: 100svh;
-    }
-    .hero-pin-content {
-      animation: hero-scrub linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 72svh;
-    }
-    .hero-pin-scroll {
-      animation: hero-scroll-hide linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 22svh;
-    }
+/* --- スクロールテリング・シーン（pin して中身をスクロールで進行） --- */
+/* 既定（非対応 / モバイル / reduced-motion）は通常フローで普通に表示 */
+.scene {
+  position: relative;
+}
+.scene-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+@keyframes scrub-in {
+  0% {
+    opacity: 0;
+    transform: translateY(48px) scale(0.95);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
   }
 }
-@keyframes hero-scrub {
-  to {
+@keyframes scrub-out {
+  0% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+  100% {
     opacity: 0;
-    transform: translateY(-7%) scale(0.93);
-    filter: blur(3px);
+    transform: translateY(-44px) scale(0.97);
+    filter: blur(4px);
   }
 }
 @keyframes hero-scroll-hide {
   to {
     opacity: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .scene--hero {
+      height: 240svh;
+    }
+    .scene--approach {
+      height: 250svh;
+    }
+    .scene--services {
+      height: 250svh;
+    }
+    .scene-pin {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    /* pin 内でレイヤーを重ねる（Hero と Philosophy のクロス用） */
+    .scene-stack {
+      display: grid;
+      width: 100%;
+    }
+    .scene-stack > .scene-cel {
+      grid-area: 1 / 1;
+    }
+    /* scrub 対象（対応ブラウザでのみ初期状態を隠し、スクロールで進行） */
+    .scrub {
+      opacity: 0;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+    }
+    .scrub-in {
+      animation-name: scrub-in;
+    }
+    .scrub-out {
+      opacity: 1;
+      animation-name: scrub-out;
+    }
+    /* スクロール開始でフェードアウトする SCROLL インジケータ */
+    .hero-pin-scroll {
+      animation: hero-scroll-hide linear both;
+      animation-timeline: --hero;
+      animation-range: cover 0% cover 10%;
+    }
   }
 }
 
