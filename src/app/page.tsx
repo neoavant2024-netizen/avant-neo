@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import HeroScene from "@/components/HeroScene";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
@@ -32,7 +31,7 @@ const keywords = [
 export default function Home() {
   return (
     <>
-      {/* ===== Hero → Philosophy（クロス pin シーン） ===== */}
+      {/* ===== Hero → Philosophy → 理念（pin で 3 段クロス） ===== */}
       <HeroScene />
 
       {/* ===== Keyword Marquee（Hero を抜けて横に流れる） ===== */}
@@ -40,47 +39,24 @@ export default function Home() {
         <Marquee items={keywords} duration={36} />
       </div>
 
-      {/* ===== 理念：利他利己 ===== */}
-      <section className="relative py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
-          <Reveal delay={0.1} y={24}>
-            <div className="mx-auto max-w-2xl rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_45%,transparent)] px-8 py-9 backdrop-blur-md">
-              <p className="font-mono text-xs tracking-[0.25em] text-[var(--color-cyan)]">
-                理念 / 利他利己
-              </p>
-              <p className="mt-5 text-[clamp(1.3rem,2.6vw,1.8rem)] font-bold leading-[1.6]">
-                顧客や相手に利益を与えることで、
-                <br />
-                <span className="text-gradient-sweep glow-gradient">
-                  自らも利益を得ていく
-                </span>
-                。
-              </p>
-              <p className="mx-auto mt-5 max-w-xl text-sm leading-[1.95] text-[var(--color-fg-muted)] sm:text-base">
-                「利他」と「利己」は対立しない。相手の成功を第一に考え抜くことが、めぐりめぐって自社の成長につながる——その信念を、私たちは事業の根幹に置いています。
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ===== Approach（3つの軸）pin シーン：スクロールで 1・2・3 と出現 ===== */}
-      <section
-        className="scene scene--approach relative"
-        style={{ viewTimelineName: "--approach" } as CSSProperties}
-      >
-        <div className="scene-pin">
-          <div className="mx-auto w-full max-w-7xl px-5 text-center sm:px-8">
+      {/* ===== Approach（3つの軸）順次出現・戻っても維持 ===== */}
+      <section className="relative py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-5 text-center sm:px-8">
+          <Reveal>
             <span className="eyebrow">APPROACH</span>
-            <h2 className="mx-auto mt-6 max-w-2xl text-[clamp(1.9rem,4.4vw,3rem)] font-bold tracking-tight">
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h2 className="mx-auto mt-7 max-w-2xl text-[clamp(2rem,4.4vw,3.2rem)] font-bold tracking-tight">
               3つの軸で、<span className="text-gradient-sweep">経営</span>を前へ。
             </h2>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-[1.9] text-[var(--color-fg-muted)] sm:text-lg">
+          </Reveal>
+          <Reveal delay={0.14}>
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-[1.9] text-[var(--color-fg-muted)] sm:text-xl">
               テクノロジー・マーケティング・実践知見。
               3つの領域を掛け合わせ、貴社の経営課題に最適なアプローチを設計します。
             </p>
-            <InfographicPillars scrub timeline="--approach" />
-          </div>
+          </Reveal>
+          <InfographicPillars />
         </div>
       </section>
 
@@ -142,20 +118,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Services（提供するサービス）pin シーン：スクロールで順に出現 ===== */}
-      <section
-        className="scene scene--services relative"
-        style={{ viewTimelineName: "--services" } as CSSProperties}
-      >
-        <div className="scene-pin">
-          <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
-            <div className="flex flex-wrap items-end justify-between gap-6">
-              <div>
-                <span className="eyebrow">SERVICES</span>
-                <h2 className="mt-6 text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-tight">
-                  提供するサービス
-                </h2>
-              </div>
+      {/* ===== Services（提供するサービス）順次出現・戻っても維持 ===== */}
+      <section className="relative py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <Reveal>
+              <span className="eyebrow">SERVICES</span>
+              <h2 className="mt-6 text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-tight">
+                提供するサービス
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
               <Link
                 href="/services"
                 className="group inline-flex items-center gap-2 text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-cyan)]"
@@ -165,10 +138,10 @@ export default function Home() {
                   →
                 </span>
               </Link>
-            </div>
-
-            <ServiceCards scrub timeline="--services" />
+            </Reveal>
           </div>
+
+          <ServiceCards />
         </div>
       </section>
 
