@@ -43,11 +43,11 @@ export default function Home() {
       <section className="relative py-20 sm:py-28">
         <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
           <Reveal className="pop" y={44}>
-            <div className="mx-auto max-w-2xl rounded-2xl border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_45%,transparent)] px-8 py-9 backdrop-blur-md">
-              <p className="font-mono text-xs tracking-[0.25em] text-[var(--color-cyan)]">
+            <div className="mx-auto max-w-3xl rounded-3xl border border-[color-mix(in_srgb,var(--color-cyan)_18%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-surface)_45%,transparent)] px-8 py-12 backdrop-blur-md sm:px-12 sm:py-14">
+              <p className="font-mono text-sm tracking-[0.25em] text-[var(--color-cyan)]">
                 理念 / 利他利己
               </p>
-              <p className="mt-5 text-[clamp(1.3rem,2.6vw,1.8rem)] font-bold leading-[1.6]">
+              <p className="mt-6 text-[clamp(1.7rem,3.6vw,2.7rem)] font-bold leading-[1.55]">
                 顧客や相手に利益を与えることで、
                 <br />
                 <span className="text-gradient-sweep glow-gradient">
@@ -55,7 +55,7 @@ export default function Home() {
                 </span>
                 。
               </p>
-              <p className="mx-auto mt-5 max-w-xl text-sm leading-[1.95] text-[var(--color-fg-muted)] sm:text-base">
+              <p className="mx-auto mt-7 max-w-2xl text-base leading-[2] text-[var(--color-fg-muted)] sm:text-lg">
                 「利他」と「利己」は対立しない。相手の成功を第一に考え抜くことが、めぐりめぐって自社の成長につながる——その信念を、私たちは事業の根幹に置いています。
               </p>
             </div>

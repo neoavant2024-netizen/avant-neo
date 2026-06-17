@@ -30,11 +30,21 @@ function ServiceIcon({ id, className }: { id: number; className?: string }) {
       </svg>
     );
   }
+  if (id === 2) {
+    return (
+      <svg viewBox="0 0 24 24" className={className} {...common}>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M3 9h18" />
+        <path d="M10 13l-1.6 1.6L10 16.2M14 13l1.6 1.6L14 16.2" />
+      </svg>
+    );
+  }
+  // 技術顧問（人＋チェック）
   return (
     <svg viewBox="0 0 24 24" className={className} {...common}>
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M3 9h18" />
-      <path d="M10 13l-1.6 1.6L10 16.2M14 13l1.6 1.6L14 16.2" />
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+      <path d="M15.4 7.2l1.7 1.7 3.4-3.4" />
     </svg>
   );
 }
@@ -49,7 +59,7 @@ export default function ServiceCards({
   timeline?: string;
 }) {
   return (
-    <div className="mt-14 grid gap-6 md:grid-cols-3">
+    <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {services.map((s, i) => {
         const card = (
           <Link
