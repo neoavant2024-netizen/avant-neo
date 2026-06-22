@@ -115,10 +115,10 @@ export default function Home() {
             <span className="eyebrow">WHO WE ARE</span>
           </Reveal>
           <h2 className="mt-9 text-[clamp(1.7rem,4.4vw,3rem)] font-bold leading-[1.4] tracking-tight">
-            <span className="block whitespace-nowrap">
+            <span className="block whitespace-normal sm:whitespace-nowrap">
               <SplitText text="私たちは、自ら市場に立つ" stagger={0.025} />
             </span>
-            <span className="block whitespace-nowrap">
+            <span className="block whitespace-normal sm:whitespace-nowrap">
               <SplitText
                 text="プレイヤーである。"
                 delay={0.25}

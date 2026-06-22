@@ -49,7 +49,7 @@ export default function HeroScene() {
         </div>
 
         <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-5 text-center sm:px-8">
-          <h1 className="hero-float whitespace-nowrap text-[clamp(2.9rem,7.8vw,6.6rem)] font-bold leading-[1.22] tracking-tight">
+          <h1 className="hero-float text-[clamp(1.7rem,8vw,6.6rem)] font-bold leading-[1.22] tracking-tight">
             <HeroHeadline />
           </h1>
           <p
@@ -105,7 +105,7 @@ export default function HeroScene() {
             <span className="eyebrow">PHILOSOPHY</span>
           </Reveal>
           <Reveal delay={0.75} y={28}>
-            <h2 className="mt-8 text-[clamp(2.3rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight">
+            <h2 className="mt-8 text-[clamp(1.7rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight">
               AIという新たな知性を
               <br />
               <span className="text-gradient-sweep glow-gradient">
@@ -138,7 +138,7 @@ export default function HeroScene() {
             <span className="eyebrow">VISION</span>
           </Reveal>
           <Reveal delay={0.75} y={28}>
-            <h2 className="mt-8 text-[clamp(2.3rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight">
+            <h2 className="mt-8 text-[clamp(1.7rem,5.6vw,4rem)] font-bold leading-[1.4] tracking-tight">
               人と事業を、
               <br />
               <span className="text-gradient-sweep glow-gradient">
