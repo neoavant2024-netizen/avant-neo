@@ -24,7 +24,7 @@ export default function Hero() {
 
       {/* 中央配置コンテンツ（JS非依存・CSSで即時表示＋フェード） */}
       <div className="hero-pin-content relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-8">
-        <h1 className="hero-float whitespace-nowrap text-[clamp(2rem,5.6vw,4.4rem)] font-bold leading-[1.32] tracking-tight">
+        <h1 className="hero-float break-words text-balance text-[clamp(1.55rem,6vw,4.4rem)] font-bold leading-[1.28] tracking-tight">
           <HeroHeadline />
         </h1>
 
